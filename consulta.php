@@ -7,8 +7,7 @@
 </head>
 <body>
 <?php
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                include 'conexao.php';
+                require 'conexao.php';
 
                 $data_consul = $_POST["data_consul"];
                 $hora_consul = $_POST["hora_consul"];
@@ -51,7 +50,6 @@
                         echo "<div class='alert alert-danger'>$erro</div>";
                     }
                 }
-            }
         ?>
 <form method="POST" class="mt-4">
             <div class="mb-3">

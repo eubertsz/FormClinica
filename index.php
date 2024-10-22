@@ -11,7 +11,7 @@
         <h1 class="text-center text-white">Cadastro de Paciente</h1>
         <?php
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                include 'conexao.php';
+                require 'conexao.php';
 
                 $nome = $_POST["nome"];
                 $data_nascimento = $_POST["data_nascimento"];
