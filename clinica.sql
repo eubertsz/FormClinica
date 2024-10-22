@@ -9,5 +9,15 @@ create table if not exists pacientes (
     email varchar(255) not null unique,
     telefone varchar(11) not null,
     endereco varchar(255),
-    sexo enum('masculino', 'feminino', 'outro') not null
+    sexo 
+);
+
+create table if not exists agendamentos (
+
+    id int auto_increment primary key,
+    data_consul date not null,
+    hora_consul time not null,
+    nome_paciente varchar(255) not null,
+    nome_medico varchar(255) not null,
+    especialidade  enum('Pediatria', 'Pneumologia', 'Psiquiatria') not null
 );

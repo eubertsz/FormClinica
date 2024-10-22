@@ -59,7 +59,7 @@
             }
         ?>
 
-        <form method="POST" class="mt-4">
+        <form action="consulta.php" method="POST" class="mt-4">
             <div class="mb-3">
                 <label for="nome" class="form-label text-white fw-bold">Nome Completo</label> 
                 <input type="text" class="form-control" id="nome" name="nome" required>
