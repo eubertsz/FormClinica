@@ -4,84 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consultas</title>
+    <!-- Link para o CSS do Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-<?php
-                require 'conexao.php';
+<body class="bg-dark text-light">
+    <?php
+        include 'conexao.php';
 
-                $data_consul = $_POST["data_consul"];
-                $hora_consul = $_POST["hora_consul"];
-                $nome_medico = $_POST["nome_medico"];
-                $nome_paciente = $_POST["nome_paciente"];
-                $especialidade = $_POST["especialidade"];
-                
-                $erros = [];
+        $data_consul = $_POST["data_consul"] ?? '';
+        $hora_consul = $_POST["hora_consul"] ?? '';
+        $nome_medico = $_POST["nome_medico"] ?? '';
+        $nome_paciente = $_POST["nome_paciente"] ?? '';
+        $especialidade = $_POST["especialidade"] ?? '';
 
-                if (empty($data_consul)) {
-                    $erros[] = "O data_consul não pode estar vazio.";
-                }
+        $erros = [];
 
-                if (empty($hora_consul)) {
-                    $erros[] = "O data_consul não pode estar vazio.";
-                }
+        if (empty($data_consul)) {
+            $erros[] = "A data da consulta não pode estar vazia.";
+        }
 
-                if (empty($nome_medico)) {
-                    $erros[] = "O data_consul não pode estar vazio.";
-                }
+        if (empty($hora_consul)) {
+            $erros[] = "A hora da consulta não pode estar vazia.";
+        }
 
-                if (empty($especialidade)) {
-                    $erros[] = "O data_consul não pode estar vazio.";
-                }
-
-                $data_atual = new DateTime();
-                $data_nasc = new DateTime($data_consul);
-
-                if (empty($erros)) {
-                    $sql = "INSERT INTO agendamentos (data_consul, hora_consul, nome_medico, especialidade, nome_paciente) 
-                            VALUES ('$data_consul', '$hora_consul', '$nome_medico', '$especialidade', '$nome_paciente')";
-                    if ($conn->query($sql) === TRUE) {
-                        echo "<div class='alert alert-success'>Cadastro realizado com sucesso!</div>";
-                    } else {
-                        echo "<div class='alert alert-danger'>Erro ao cadastrar: " . $conn->error . "</div>";
-                    }
-                    $conn->close();
-                } else {
-                    foreach ($erros as $erro) {
-                        echo "<div class='alert alert-danger'>$erro</div>";
-                    }
-                }
-        ?>
-<form method="POST" class="mt-4">
+        if (empty($erros)) {
+            $sql = "INSERT INTO agendamentos (data_consul, hora_consul, nome_medico, especialidade, nome_paciente) 
+                    VALUES ('$data_consul', '$hora_consul', '$nome_medico', '$especialidade', '$nome_paciente')";
+            if ($conn->query($sql) === TRUE) {
+                echo "<div class='alert alert-success'>Cadastro realizado com sucesso!</div>";
+            } else {
+                echo "<div class='alert alert-danger'>Erro ao cadastrar: " . $conn->error . "</div>";
+            }
+            $conn->close();
+        } else {
+            foreach ($erros as $erro) {
+                echo "<div class='alert alert-danger'>$erro</div>";
+            }
+        }
+    ?>
+    <div class="container mt-4">
+        <form method="POST">
             <div class="mb-3">
-                <label for="data_consul" class="form-label text-white fw-bold">Data de Consulta</label> 
-                <input type="text" class="form-control" id="data_consul" name="data_consul" required>
+                <label for="data_consul" class="form-label fw-bold">Data de Consulta</label> 
+                <input type="date" class="form-control" id="data_consul" name="data_consul" required>
             </div>
 
             <div class="mb-3">
-                <label for="hora_consul" class="form-label text-white fw-bold">Hora da Consulta</label>
-                <input type="date" class="form-control" id="hora_consul" name="hora_consul" required>
+                <label for="hora_consul" class="form-label fw-bold">Hora da Consulta</label>
+                <input type="time" class="form-control" id="hora_consul" name="hora_consul" required>
             </div>
 
             <div class="mb-3">
-                <label for="nome_medico" class="form-label text-white fw-bold">Nome do Medico</label>
-                <input type="nome_medico" class="form-control" id="nome_medico" name="nome_medico" required>
+                <label for="nome_medico" class="form-label fw-bold">Nome do Médico</label>
+                <input type="text" class="form-control" id="nome_medico" name="nome_medico" required>
             </div>
 
             <div class="mb-3">
-                <label for="nome_paciente" class="form-label text-white fw-bold">Nome do Paciente</label>
-                <input type="nome_paciente" class="form-control" id="nome_paciente" name="noem_paciente" required>
+                <label for="nome_paciente" class="form-label fw-bold">Nome do Paciente</label>
+                <input type="text" class="form-control" id="nome_paciente" name="nome_paciente" required>
             </div>
 
             <div class="mb-3">
-                <label for="sexo" class="form-label text-white fw-bold">Especialidade</label>
-                <select class="form-select" id="sexo" name="especialidade" required>
-                    <option value="Pediatria"></option>
-                    <option value="Pneumologia"></option>
-                    <option value="Psiquiatria"></option>
+                <label for="especialidade" class="form-label fw-bold">Especialidade</label>
+                <select class="form-select" id="especialidade" name="especialidade" required>
+                    <option value="">Selecione uma especialidade</option>
+                    <option value="Pediatria">Pediatria</option>
+                    <option value="Pneumologia">Pneumologia</option>
+                    <option value="Psiquiatria">Psiquiatria</option>
                 </select>
             </div>
 
             <button type="submit" class="btn btn-success">Agendar Consulta</button>
         </form>
+    </div>
+
+    <!-- Script do Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
